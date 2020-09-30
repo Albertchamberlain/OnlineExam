@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.amos.dao.BlankMapper">
+    <select id="findBlankAll" resultType="com.amos.pojo.Tk.Blank">
+        select  * from tk_blank
+    </select>
+
+    <select id="findbyBlankId" parameterType="int" resultType="com.amos.pojo.Tk.Blank">
+        select * from tk_blank where id = #{id}
+    </select>
+
+    <delete id="deleteBlank" parameterType="Long">
+        delete from tk_blank where id=#{id}
+    </delete>
+
+    <insert id="createBlank" parameterType="com.amos.pojo.Tk.Blank">
+        insert into tk_blank(content, answer, analysis, chapter, chaptertwo, difficulty)
+        VALUES(#{content},#{answer},#{analysis},#{chapter},#{chaptertwo},#{difficulty})
+    </insert>
+
+    <update id="updateBlank" parameterType="com.amos.pojo.Tk.Blank">
+        update tk_blank set
+                id=#{id},content=#{content},answer=#{answer},analysis=#{analysis},chapter=#{chapter},
+                chaptertwo=#{chaptertwo}
+    </update>
+</mapper>
