@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.amos.dao.ExamMapper">
+
+    <insert id="createExam" parameterType="com.amos.pojo.Exam.ExamInformation" useGeneratedKeys="true" keyProperty="id">
+        insert into exam_information(examname,begindate,enddate,password,examtime,teacher,chaptertwo,choicenum,choicescore,
+                                     judgenum,judgescore,difficulty) VALUES(#{examname},#{begindate},#{enddate}
+        ,#{password},#{examname},#{teacher},#{chaptertwo},#{choicenum},#{choicescore},#{judgenum},#{judgescore},#{difficulty})
+    </insert>
+
+    <select id="AllExam" resultType="com.amos.pojo.Exam.ExamInformation">
+        select * from exam_information
+    </select>
+
+    <select id="RandChoice" resultType="com.amos.pojo.Exam.PaperChoice">
+        select content,aoption,boption,coption,doption,answer from tk_choice
+        where chaptertwo = #{chaptertwo} and difficulty = #{difficulty} order by RAND() limit #{choicenum}
+    </select>
+
+    <select id="RandJudge" resultType="com.amos.pojo.Exam.PaperJudge">
+        select content,answer from tk_judge where chaptertwo =#{chaptertwo} and difficulty = #{difficulty} order by RAND() limit #{judgenum}
+    </select>
+
+    <insert id="insertRandChoice" parameterType="java.util.List">
+            insert into paper_choice(content, answer, aoption, boption, coption, doption, examid) VALUES
+                    <foreach collection="list" item="item" index="index" separator=",">
+                                (#{item.content}, #{item.answer},#{item.aoption}, #{item.boption}
+                        , #{item.coption} , #{item.doption} ,#{item.examid} )
+                    </foreach>
+    </insert>
+
+    <insert id="insertRandJudge" parameterType="java.util.List">
+        insert into  paper_judge(content, answer, examid) VALUES
+        <foreach collection="list" item="item" index ="index" separator=",">
+                (#{item.content},#{item.answer},#{item.examid})
+        </foreach>
+    </insert>
+
+    <select id="allPaperChoice" parameterType="int" resultType="com.amos.pojo.Exam.PaperChoice">
+        select * from paper_choice where examid = #{examid};
+    </select>
+
+    <select id="allPaperJudge" parameterType="int" resultType="com.amos.pojo.Exam.PaperJudge">
+        select  * from paper_judge where examid - #{examid};
+    </select>
+
+    <select id="findById" resultType="com.amos.pojo.Exam.ExamInformation">
+        select *
+        from exam_information where id  = #{id};
+    </select>
+
+    <insert id="creatAllAnswer" parameterType="java.util.List">
+        insert into exam_result(studentid, examid, stuanswer) VALUES
+            <foreach collection="list" item="item" index="index" separator=",">
+                (#{item.studentid},#{item.examid},#{item.stuanswer})
+            </foreach>
+    </insert>
+
+    <insert id="creatExamHistory" parameterType="com.amos.pojo.Exam.ExamHistory">
+        insert into examhistory(examid,studentid,score)
+        VALUES  (#{examid},#{studentid},#{score})
+    </insert>
+
+    <select id="byStudentId" parameterType="int" resultType="com.amos.pojo.Exam.ExamHistory">
+        select *
+        from examhistory where id=#{studentid};
+    </select>
+
+    <delete id="detailsExam" parameterType="com.amos.pojo.Exam.ExamHistory">
+        select *
+        from  examhistory where studentid=#{studentid} and examid = #{examid};
+    </delete>
+
+    <select id="alreadExam" parameterType="java.util.List" resultType="com.amos.pojo.Exam.ExamInformation">
+            select * from exam_information
+            where id in
+            <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+            </foreach>
+    </select>
+
+    <select id="allAnswer" resultType="com.amos.pojo.Exam.AllAnswer">
+        select * from exam_result where studentid  = #{studentid} and examid = #{examid}
+    </select>
+
+    <delete id="deletePaperChoice" parameterType="int">
+        delete from paper_choice where examid = #{examid};
+    </delete>
+
+    <delete id="deletePaperJudge" parameterType="int">
+        delete  from paper_judge where examid = #{examid};
+    </delete>
+
+    <delete id="deleteExamInfo" parameterType="int">
+        delete from exam_information where id = #{examid};
+    </delete>
+
+    <delete id="byExamId" parameterType="int">
+        delete  from examhistory where id=#{examid};
+    </delete>
+</mapper>

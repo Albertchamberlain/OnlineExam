@@ -19,7 +19,17 @@ public class ExamInformation {
         private int choicenum;
         private int choicescore;
         private int judgenum;
-        private int difficulty;
+        private int judgescore;
+
+    public int getJudgescore() {
+        return judgescore;
+    }
+
+    public void setJudgescore(int judgescore) {
+        this.judgescore = judgescore;
+    }
+
+    private int difficulty;
         private  int allscore;
 
     public String getStudentname() {

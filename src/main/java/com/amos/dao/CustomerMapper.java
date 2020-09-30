@@ -11,6 +11,5 @@ public interface CustomerMapper {
         void delete(long id);
         Customer findById(Long id);
         void upDate(Customer customer);
-
         Page<Customer> findByPage(Customer customer);
 }
