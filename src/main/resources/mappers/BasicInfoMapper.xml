@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.amos.dao.BasicInfoMapper">
+
+    <select id="findAll"  resultType="com.amos.pojo.BasicInfo.Semester">
+            select seid,sename from semester;
+    </select>
+    <select id="findMaAll" parameterType="Long" resultType="com.amos.pojo.BasicInfo.Major">
+        select maid,maname from major where seid = #{seid}
+    </select>
+
+    <select id="findCiAll" parameterType="Long" resultType="com.amos.pojo.BasicInfo.Class">
+        select cid,cname from class where maid = #{maid}
+    </select>
+
+    <insert id="createSemester" parameterType="com.amos.pojo.BasicInfo.Semester">
+        insert into semester(sename) values (#{sename})
+    </insert>
+
+    <insert id="createMajor" parameterType="com.amos.pojo.BasicInfo.Major">
+            insert into major(maname, seid) values(#{maname},#{seid})
+    </insert>
+
+    <delete id="deleteManySemster" parameterType="int">
+        delete from semester where  seid in
+        <foreach collection="array" item="seid" separator=",">
+            #{seid}
+        </foreach>
+    </delete>
+
+    <insert id="createBlass" parameterType="com.amos.pojo.BasicInfo.Class">
+            insert into class(cname, maid) VALUES(#{cname},#{maid})
+    </insert>
+
+    <insert id="createStudent" parameterType="com.amos.pojo.Student">
+        insert into student(username, password, classname, num)values(#{username},#{password},#{classname},#{num})
+    </insert>
+
+    <update id="upSemester" parameterType="com.amos.pojo.BasicInfo.Semester">
+        update semester set sename =#{sename} where seid=#{seid}
+    </update>
+
+    <update id="upBlass" parameterType="com.amos.pojo.BasicInfo.Class">
+        update class set cname = #{cname} where cid=#{cid}
+    </update>
+
+    <update id="upMajor" parameterType="com.amos.pojo.BasicInfo.Major">
+        update major set maname =#{maname} where maid = #{mid}
+    </update>
+
+    <update id="updateSit" parameterType="com.amos.pojo.BasicInfo.Sit">
+        update sit set sit = #{sit} where id = #{id}
+    </update>
+    
+    <update id="updateDepart" parameterType="com.amos.pojo.BasicInfo.Depart">
+        update depart
+        set  depart=#{depart}
+        where id = #{id};
+    </update>
+    <!-- 查找某个班级下的学生-->
+    <select id="findClass" parameterType="String" resultType="com.amos.pojo.Student">
+        select id,username,password,num,classname from student where classname = #{classname} order by id asc
+    </select>
+
+    <delete id="deleteClass" parameterType="String">
+        DELETE  from class where cname=#{cname}
+    </delete>
+
+    <delete id="deleteDepart" parameterType="int">
+        delete  from depart where id = #{id}
+    </delete>
+
+    <delete id="deleteMajor" parameterType="Long">
+        delete from major where maid = #{maid}
+    </delete>
+
+    <delete id="deleteYear" parameterType="Long">
+        delete  from semester where seid = #{seid}
+    </delete>
+
+    <insert id="allDepart" parameterType="com.amos.pojo.BasicInfo.Depart">
+        select * from depart
+    </insert>
+
+    <insert id="insertDepart" parameterType="com.amos.pojo.BasicInfo.Depart">
+        insert into depart (depart) values (#{depart})
+    </insert>
+
+    <select id="allSit" resultType="com.amos.pojo.BasicInfo.Sit">
+        select  * from sit
+    </select>
+
+    <insert id="insertSit" parameterType="com.amos.pojo.BasicInfo.Sit">
+        insert into sit(sit) values (#{sit})
+    </insert>
+
+    <delete id="deleteSit" parameterType="int">
+        delete  from sit where id  = #{id}
+    </delete>
+</mapper>
