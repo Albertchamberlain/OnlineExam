@@ -8,7 +8,7 @@ public class Judge {
     private String content;
     private  String answer;
     private  String analysis;
-    private String chaper;
+    private String chapter;
     private  String chaptertwo;
     private String  difficulty;
 
@@ -44,12 +44,12 @@ public class Judge {
         this.analysis = analysis;
     }
 
-    public String getChaper() {
-        return chaper;
+    public String getChapter() {
+        return chapter;
     }
 
-    public void setChaper(String chaper) {
-        this.chaper = chaper;
+    public void setChapter(String chaper) {
+        this.chapter = chaper;
     }
 
     public String getChaptertwo() {

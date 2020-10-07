@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.amos.dao.ReadProgramMapper">
+
+    <select id="readProgramAll" resultType="com.amos.pojo.Tk.ReadProgram">
+        select * from tk_readpg
+    </select>
+
+    <select id="byReadProgramId" parameterType="Long" resultType="com.amos.pojo.Tk.ReadProgram">
+        select * from tk_readpg where id = #{id}
+    </select>
+
+    <delete id="deleteReadProgram" parameterType="Long">
+        delete from tk_readpg where  id   = #{id}
+    </delete>
+
+    <insert id="creatReadProgram" parameterType="com.amos.pojo.Tk.ReadProgram">
+        insert into  tk_readpg (content, answer, analysis, chapter, chaptertwo, difficulty) VALUES
+        (#{content,jdbcType=VARCHAR})
+    </insert>
+    <update id="updateReadProgram" parameterType="com.amos.pojo.Tk.ReadProgram">
+        update tk_readpg set id = #{id},
+        content = #{content,jdbcType=VARCHAR},
+        answer = #{content,jdbcType=VARCHAR},
+        analysis = #{anlysis,jdbcType=VARCHAR},
+        chapter = #{chapter},
+        chaptertwo = #{chaptertwo,jdbcType=VARCHAR},
+        difficulty = #{difficulty}
+
+        where  id = #{id}
+    </update>
+</mapper>

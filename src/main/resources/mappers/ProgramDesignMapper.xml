@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.amos.dao.ProgramDesignMapper">
+
+    <select id="programDesignAll" resultType="com.amos.pojo.Tk.ProgramDesign">
+        select *from tk_pgdesign
+    </select>
+
+    <select id="byProgramDesignId" parameterType="Long" resultType="com.amos.pojo.Tk.ProgramDesign">
+        select * from tk_pgdesign where id =   #{id}
+    </select>
+
+    <delete id="deleteProgramDesign" parameterType="Long">
+        DELETE  from tk_pgdesign where id = #{id}
+    </delete>
+
+    <insert id="creatProgramDesign" parameterType="com.amos.pojo.Tk.ProgramDesign">
+        insert into tk_pgdesign(content, answer, analysis, chapter, chaptertwo, difficulty) VALUES
+        (#{content},#{answer},#{chapter},#{chaptertwo},#{analysis},#{diffculty})
+    </insert>
+
+
+    <update id="updateProgramDesign" parameterType="com.amos.pojo.Tk.ProgramDesign">
+        update tk_pgdesign set id = #{id} ,content = #{content} ,answer = #{answer},analysis=#{analysis},chapter =#{chapter},
+        chaptertwo=#{chaptertwo},difficulty = #{diffculty} where  id = #{id}
+    </update>
+</mapper>

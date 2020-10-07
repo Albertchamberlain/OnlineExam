@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.amos.dao.ProgramFillMapper">
+
+    <select id="programFillAll" resultType="com.amos.pojo.Tk.ProgramFill">
+        select  * from tk_fillblank
+    </select>
+
+    <select id="byProgramFillId" resultType="com.amos.pojo.Tk.ProgramFill" parameterType="Long">
+        select * from tk_fillblank where  id =#{id}
+    </select>
+
+    <delete id="deleteProgramFill" parameterType="Long">
+        delete  from tk_fillblank where id = #{id}
+    </delete>
+
+    <insert id="updateProgramFill" parameterType="com.amos.pojo.Tk.ProgramFill">
+        insert into  tk_fillblank (content, answer, analysis, chapter, chaptertwo, difficulty) VALUES (#{content},#{answer},#{chapter}
+        ,#{chaptertwo},#{chaptertwo},#{analysis},#{difficulty})
+    </insert>
+
+    <update id="updateProgramFill" parameterType="com.amos.pojo.Tk.ProgramFill">
+        update  tk_fillblank set  id = #{id}
+                                    ,content =#{content}
+                                    ,answer=#{answer}
+                                    ,analysis=#{analysis}
+                                    ,chapter=chapter
+                                    ,chaptertwo = #{chaptertwo}
+                                    ,difficulty=#{difficulty}
+    </update>
+
+</mapper>

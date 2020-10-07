@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.amos.dao.UserMapper">
+
+    <select id="login" parameterType="com.amos.pojo.User" resultType="com.amos.pojo.User">
+        select * from tb_user where username = #{username}
+    </select>
+
+    <insert id="creatAdmin" parameterType="com.amos.pojo.User">
+        insert into tb_user (username, password) VALUES (#{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="updateUser" parameterType="com.amos.pojo.User">
+        update tb_user set password=#{password,jdbcType=VARCHAR}
+        where id =#{id}
+    </update>
+
+    <select id="findTeacherAll" resultType="com.amos.pojo.Teacher">
+        select * from teacher
+    </select>
+
+    <insert id="create" parameterType="com.amos.pojo.Teacher">
+        insert into teacher(username, major, level, mail, password) VALUES (#{username},#{major},#{level},#{mail},#{password})
+    </insert>
+
+    <delete id="delete" parameterType="Long">
+        delete from teacher where id = #{id}
+    </delete>
+
+    <select id="findById" parameterType="Long" resultType="com.amos.pojo.Teacher">
+
+        select * from teacher where  id = #{id}
+    </select>
+
+    <update id="update" parameterType="com.amos.pojo.Teacher">
+        update teacher set id = #{id}, username = #{username,jdbcType=VARCHAR},major = #{major},level = #{level},mail=#{level},password=#{password,jdbcType=VARCHAR}
+        where id = #{id}
+    </update>
+
+    <resultMap type="com.amos.pojo.Point1" id="categoryBean" >
+        <id column="cid" property="id"/>
+        <result column="cname" property="pointname"/>
+        <collection property="point2" ofType="com.amos.pojo.Point2">
+            <id column="pid" property="bid"/>
+            <result column="pname" property="pname"/>
+        </collection>
+    </resultMap>
+
+
+    <select id="findPoint1All" resultMap="categoryBean">
+            select c.*,p.*,c.id 'cid', p.bid 'pid' ,c.pointname 'cname' ,p.pname 'pname' from point1 c left join point2 p on c.id = p.aid
+    </select>
+
+    <insert id="createPoint1" parameterType="com.amos.pojo.Point1">
+        insert into  point1(pointname) values (#{pointname})
+    </insert>
+
+    <delete id="deleteP1" parameterType="Long">
+        delete from point2 where aid = #{id}
+    </delete>
+
+    <delete id="deletePP1" parameterType="String">
+        delete from point2 where pname = #{chaptertwo}
+    </delete>
+
+    <insert id="createPoint2" parameterType="com.amos.pojo.Point2">
+        insert into  point2(pname, aid) VALUES (#{pname},#{aid})
+    </insert>
+
+    <select id="point1All" resultType="com.amos.pojo.Point1">
+        select *
+        from point1
+    </select>
+
+    <select id="findChoiceAll" resultType="com.amos.pojo.Tk.Choice">
+        select *
+        from tk_choice;
+    </select>
+
+    <insert id="createChoice" parameterType="com.amos.pojo.Tk.Choice">
+        insert into tk_choice(content, aoption, boption, coption, doption, answer, analysis, chapter, chaptertwo, difficulty) VALUES
+        (#{content},#{aoption},#{boption},#{coption},#{doption},#{answer},#{analysis},#{chapter},#{chaptertwo},#{difficulty})
+    </insert>
+
+    <select id="findByChId" parameterType="Long" resultType="com.amos.pojo.Tk.Choice">
+        select * from tk_choice where id = #{id}
+    </select>
+
+    <update id="updateCh" parameterType="com.amos.pojo.Tk.Choice">
+        update tk_choice set id =#{id},content = #{content},aoption=#{aoption},
+        boption=#{boption,jdbcType=VARCHAR},coption=#{coption},doption=#{doption},answer=#{answer},
+        analysis =#{analysis},chapter = #{chapter},chaptertwo = #{chaptertwo},difficulty = #{difficulty}
+        where  id=#{id}
+    </update>
+
+    <delete id="deleteCh" parameterType="Long">
+        delete from tk_choice where id = #{id}
+    </delete>
+
+    <select id="findReadProgramAll" resultType="com.amos.pojo.Tk.ReadProgram">
+        select  * from tk_readpg
+    </select>
+
+    <select id="findUserName" parameterType="String" resultType="com.amos.pojo.User">
+        select *
+        from tb_user where username = #{username};
+    </select>
+
+    <delete id="deleteManyChoice" parameterType="String">
+        delete from tk_choice where id in (#{chkValue})
+    </delete>
+
+</mapper>
