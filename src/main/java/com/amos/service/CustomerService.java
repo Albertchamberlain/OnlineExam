@@ -3,7 +3,7 @@ package com.amos.service;
 import com.amos.pojo.Customer;
 import com.amos.pojo.PageBean;
 
-public interface CustomerService extends BaseService{
+public interface CustomerService extends BaseService<Customer>{
 
     /**
      * 分页查询
